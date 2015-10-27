@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <style>
+                    
+#list1 {
+  height:100px; width:18%;
+  overflow:hidden; overflow-y:scroll;
+}
+
+#list2 {
+  height:100px; width:18%;
+  overflow:hidden; overflow-y:scroll;
+}
+
+.body {
+  height:100%; width:100%;
+}
+
+.main {
+  height:100%; width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left {
+  height:100px; width:50%;
+  position:relative;
+  float:left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right {
+  height:100px; width:50%;
+  position:relative;
+  float:left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.litem {
+  cursor: pointer;
+}
+                
+.square {
+	width: 10px;
+	height: 10px;
+}
+                
+</style>
+<script>
+	function requestColors() {
+		var colorData;
+
+		var oReq = new XMLHttpRequest();
+		oReq.onload = reqListener;
+		oReq.open("get", "ColorNameMap.json", true);
+		oReq.send();
+
+		function reqListener(e) {
+			colorData = JSON.parse(this.responseText);
+			
+			var i;
+
+			for (i = 0; i < colorData.length; i++)
+			{
+				var li = document.createElement("li");
+				li.className = "litem";
+				li.id = "list1" + i;
+				var t = document.createTextNode(colorData[i].color);
+				li.appendChild(t);
+                var u = document.createTextNode(colorData[i].value);
+				li.appendChild(u);
+				document.getElementById("list1").appendChild(li);
+                var sqr= document.createElement("div");
+                sqr.className+= ""+ "square";
+                sqr.style.backgroundColor=colorData[i].value;
+                li.appendChild(sqr);
+                
+                
+                
+			}
+
+			for (i = 0; i < colorData.length; i++)
+			{
+				var li = document.createElement("li");
+				li.className = "litem";
+				li.id = "list2" + i;
+				var t = document.createTextNode(colorData[i].value);
+				li.appendChild(t);
+				document.getElementById("list2").appendChild(li);
+                var sqr= document.createElement("div");
+                sqr.className+= ""+ "square";
+                sqr.style.backgroundColor=colorData[i].value;
+                li.appendChild(sqr);
+
+			}
+		}
+	}
+	
+	window.onload = requestColors;
+</script>
+</head>
+<body>
+<div class="main">
+	<div class="left">
+		<ul id="list1">
+		</ul>
+	</div>
+
+	<div class="right">
+		<ul id="list2">
+		</ul>
+	</div>
+</div>
+</body>
+</html>
